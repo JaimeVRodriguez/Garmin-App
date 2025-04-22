@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garmin Data Viewer</title>
+    <style>
+        body { font-family: sans-serif; }
+        #login-form, #data-display { margin: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        #login-form div { margin-bottom: 10px; }
+        label { display: inline-block; width: 100px; }
+        input[type="text"], input[type="password"] { padding: 5px; }
+        button { padding: 8px 15px; cursor: pointer; }
+        #status { margin-top: 15px; font-weight: bold; }
+        table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Garmin Data Viewer</h1>
+
+    <div id="login-form">
+        <h2>Login to Fetch/Update Data</h2>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <button id="login-button">Login and Fetch Latest</button>
+        <div id="login-status"></div>
+    </div>
+
+    <div id="data-display">
+        <h2>Recent Activities</h2>
+         <button id="refresh-button">Refresh Data (from DB)</button>
+        <div id="data-status"></div>
+        <div id="activities-table">
+            <p>No data loaded yet. Login or Refresh.</p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
