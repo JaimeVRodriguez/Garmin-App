@@ -214,17 +214,15 @@ def login_and_fetch():
 
         logging.info(f"Running GarminDB command. CWD: {cwd_to_run}")
         command = [
-            'garmindb',
-            # Flags specifying what to sync:
-            # '--all', # Use --all for initial sync, but risk timeout. Prefer specific types.
-            '--activities', # Sync only activities for this example
-            # Add other types like '--steps', '--hr' if configured in data_types and needed
-
-            # Flags specifying actions:
+            'python',                   # Use the python interpreter directly
+            '-m',                       # The flag to run a library module
+            'garmindb.garmindb_cli',    # The specific module that contains the main() function for garmindb
+            # --- Add the arguments for garmindb below ---
+            '--activities',
             '--download',
             '--import',
             '--analyze',
-            '--latest' # Crucial for faster, incremental updates
+            '--latest'
         ]
 
         # Execute the command
