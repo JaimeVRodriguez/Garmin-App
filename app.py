@@ -271,8 +271,8 @@ def login_and_fetch():
             text=True,
             check=True,
             # timeout=120, # Example: 2 minute timeout - adjust or remove
-            cwd=cwd_to_run, # Run command from this directory if needed by garmindb
-            env=os.environ.copy()
+            #cwd=cwd_to_run, # Run command from this directory if needed by garmindb
+            #env=os.environ.copy()
         )
 
         logging.info(f"GarminDB sync process successful. Output:\n{process.stdout}")
