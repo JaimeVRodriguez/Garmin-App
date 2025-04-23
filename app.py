@@ -200,6 +200,42 @@ def login_and_fetch():
 
     activities = [] # Initialize activities list
     sync_success = False
+
+    # --- Add this diagnostic block ---
+    logging.info("--- Checking Runtime Environment ---")
+    try:
+        logging.info(f"Python Executable: {sys.executable}") # Ensure 'import sys' is at the top of app.py
+        logging.info(f"Python Version: {sys.version}")
+        logging.info(f"Runtime sys.path: {sys.path}") # Log Python's search path
+
+        # Check direct import
+        try:
+            import garmindb
+            logging.info(">>> Successfully imported 'garmindb' module directly.")
+            # Optional: Check type or specific attribute if needed
+            # logging.info(f"Type of imported garmindb: {type(garmindb)}")
+        except ImportError as imp_err:
+            logging.error(f">>> FAILED to import 'garmindb' module directly: {imp_err}")
+
+        # Check packages via pip freeze
+        logging.info("Running 'pip freeze' check...")
+        reqs_process = subprocess.run(
+            [sys.executable, '-m', 'pip', 'freeze'],
+            capture_output=True, text=True, check=True, timeout=15 # Add timeout
+        )
+        installed_packages_list = reqs_process.stdout.strip().split('\n')
+        logging.info(f"Output of 'pip freeze' at runtime:\n{reqs_process.stdout.strip()}")
+        if any('garmindb' in pkg.lower() for pkg in installed_packages_list):
+             logging.info(">>> garmindb package IS found in pip freeze output.")
+        else:
+             logging.warning(">>> garmindb package IS NOT found in pip freeze output!")
+
+    except Exception as e:
+        logging.error(f"Could not run runtime environment checks: {e}", exc_info=True)
+    logging.info("--- End Runtime Environment Check ---")
+    # --- End diagnostic block ---
+
+
     try:
         # 2. Run GarminDB sync process using the config file
         # Using --latest for incremental updates (faster, less likely to timeout)
