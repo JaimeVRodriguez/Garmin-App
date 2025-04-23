@@ -181,11 +181,10 @@ def login_and_fetch():
         GARMINDB_CLI_PY_PATH = os.path.join(venv_bin_dir, 'garmindb_cli.py')
         logging.info(f"Attempting to execute script file directly: {GARMINDB_CLI_PY_PATH}")
         # 2. Run GarminDB sync process using python -m
-        logging.info(f"Running GarminDB command via python -m.")
         command = [
             sys.executable,             # Use absolute path to python
             '-m',
-            'garmindb.garmindb_cli',
+            GARMINDB_CLI_PY_PATH, 
             # --- Arguments ---
             '--activities',
             '--download',
