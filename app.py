@@ -247,13 +247,13 @@ def login_and_fetch():
         # The command might need adjustment based on how GarminDB finds its config/db.
         # Forcing current working directory *might* help if garmindb uses relative paths from CWD
         # cwd_to_run = GARMINDB_DATA_DIR
-        cwd_to_run = APP_ROOT # Or maybe run from app root? Test what works.
+        venv_bin_dir = os.path.dirname(sys.executable) # Get the .../.venv/bin directory
+        GARMINDB_SCRIPT_PATH = os.path.join(venv_bin_dir, 'garmindb') # Construct path to script
+        logging.info(f"Attempting to execute script directly: {GARMINDB_SCRIPT_PATH}")
 
-        logging.info(f"Running GarminDB command. CWD: {cwd_to_run}")
+# Define the command to run the script directly
         command = [
-            'python',                   # Use the python interpreter directly
-            '-m',                       # The flag to run a library module
-            'garmindb.garmindb_cli',    # The specific module that contains the main() function for garmindb
+            GARMINDB_SCRIPT_PATH, # The full path to the script
             # --- Add the arguments for garmindb below ---
             '--activities',
             '--download',
